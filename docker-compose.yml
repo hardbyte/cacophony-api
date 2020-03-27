@@ -1,0 +1,37 @@
+version: "2.4"
+services:
+  server:
+    container_name: cacophony-api_server
+    #build: .
+    image: hardbyte/cacophony-api:latest
+    environment:
+      NODE_BIN: node
+    ports:
+      - 1080:1080
+      - 2008:2008
+
+#  db:
+#    container_name: cacophony-api_db
+#    image: kartoza/postgis:latest
+#    environment:
+#      POSTGRES_PASSWORD: test
+#      POSTGRES_USER: test
+#      POSTGRES_DBNAME: cacophonytest
+#    ports:
+#      - 5432:5432
+#    healthcheck:
+#      test: pg_isready -q -h db -p 5432 -U test
+#      interval: 3s
+#      timeout: 5s
+#      retries: 5
+
+  s3:
+    container_name: cacophony-api_s3
+    image: minio/minio:latest
+    entrypoint: sh
+    command: -c 'mkdir -p /buckets/cacophony && /usr/bin/minio server --address :9001 /buckets'
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: miniostorage
+    ports:
+      - 9001:9001
