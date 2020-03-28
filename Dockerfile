@@ -5,9 +5,13 @@ ENV TZ=Pacific/Auckland
 RUN echo $TZ > /etc/timezone \
  && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
 
-RUN npm install -g nodemon
-
 COPY docker-entrypoint.sh /
+
+# API
+EXPOSE 1080
+
+# API - fileProcessing
+EXPOSE 2008
 
 WORKDIR /app
 
@@ -17,10 +21,7 @@ RUN npm install
 
 COPY . .
 
-# API
-EXPOSE 1080
+RUN echo "---- Generating API doc ----" && npm run apidoc
+RUN echo "---- Compiling Typescript --" && ./node_modules/.bin/tsc
 
-# API - fileProcessing
-EXPOSE 2008
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD "/docker-entrypoint.sh"
