@@ -12,6 +12,8 @@ const server = {
 
 const s3 = {
   // Used for storing audio & video recordings.
+  // the publicKey and privateKey are not required if e.g. running on EC2 and the machine has been
+  // granted access
   publicKey: "REQUIRED", // obtain from S3 server.
   privateKey: "REQUIRED", // obtain from S3 server
   bucket: "cacophony",

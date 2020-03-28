@@ -2,28 +2,28 @@ version: "2.4"
 services:
   server:
     container_name: cacophony-api_server
-    #build: .
+    # TODO use project docker hub account
     image: hardbyte/cacophony-api:latest
-    environment:
-      NODE_BIN: node
+
+    build: .
     ports:
       - 1080:1080
       - 2008:2008
 
-#  db:
-#    container_name: cacophony-api_db
-#    image: kartoza/postgis:latest
-#    environment:
-#      POSTGRES_PASSWORD: test
-#      POSTGRES_USER: test
-#      POSTGRES_DBNAME: cacophonytest
-#    ports:
-#      - 5432:5432
-#    healthcheck:
-#      test: pg_isready -q -h db -p 5432 -U test
-#      interval: 3s
-#      timeout: 5s
-#      retries: 5
+  db:
+    container_name: cacophony-api_db
+    image: kartoza/postgis:latest
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_USER: test
+      POSTGRES_DBNAME: cacophonytest
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: pg_isready -q -h db -p 5432 -U test
+      interval: 3s
+      timeout: 5s
+      retries: 5
 
   s3:
     container_name: cacophony-api_s3
